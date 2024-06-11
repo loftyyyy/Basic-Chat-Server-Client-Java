@@ -56,6 +56,7 @@ public class DailyAdviceServer {
         return advice;
     }
 }
+// WRITING
 //                PrintWriter writer = new PrintWriter(Channels.newOutputStream(socketChannel));
 //
 //                String advice = getAdvice();
