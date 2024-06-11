@@ -1,6 +1,8 @@
 package org.example;
 
+import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.io.Writer;
 import java.net.InetSocketAddress;
 import java.nio.channels.Channels;
@@ -28,12 +30,18 @@ public class DailyAdviceServer {
 
             while(serverSocketChannel.isOpen()){
                 SocketChannel socketChannel = serverSocketChannel.accept();
-                PrintWriter writer = new PrintWriter(Channels.newOutputStream(socketChannel));
 
-                String advice = getAdvice();
-                writer.println(advice);
-                writer.close();
-                System.out.println(advice);
+                Reader reader = Channels.newReader(socketChannel, StandardCharsets.UTF_8);
+                BufferedReader bufferedReader = new BufferedReader(reader);
+                String message;
+                while((message = bufferedReader.readLine()) != null){
+                    System.out.println(message);
+
+                }
+
+                reader.close();
+                bufferedReader.close();
+                System.out.println(message);
             }
 
         }catch (Exception e){
@@ -48,3 +56,9 @@ public class DailyAdviceServer {
         return advice;
     }
 }
+//                PrintWriter writer = new PrintWriter(Channels.newOutputStream(socketChannel));
+//
+//                String advice = getAdvice();
+//                writer.println(advice);
+//                writer.close();
+//                System.out.println(advice);
