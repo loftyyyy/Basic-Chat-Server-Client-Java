@@ -50,7 +50,6 @@ public class SimpleChatServer {
         public void tellEveryone(String message){
             for(PrintWriter writer : clientWriter){
                 writer.println(message);
-
             }
 
         }
@@ -72,7 +71,7 @@ public class SimpleChatServer {
                 System.out.println("Closed unexpectedly");
             }finally {
                 try{
-
+                    System.out.println("Client has exited");
                     socket.close();
                 }catch (Exception e){
                     e.printStackTrace();

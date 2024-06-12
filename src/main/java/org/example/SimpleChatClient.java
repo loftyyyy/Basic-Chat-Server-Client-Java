@@ -2,10 +2,13 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.nio.Buffer;
 import java.nio.channels.Channels;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
@@ -40,7 +43,7 @@ public class SimpleChatClient {
         frame.pack();
         frame.setSize(400,400);
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         frame.addWindowListener(new java.awt.event.WindowAdapter(){
             @Override
@@ -62,6 +65,20 @@ public class SimpleChatClient {
         }
 
     }
+    public void getMessage(){
+        Reader reader = Channels.newReader(channel, StandardCharsets.UTF_8);
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        String message;
+        try{
+            message = bufferedReader.readLine();
+            System.out.println(message);
+
+        }catch (Exception e){
+
+        }
+
+
+    }
     public void sendMessage(){
         if(!messageField.getText().isBlank()){
             writer.println(messageField.getText());
@@ -69,8 +86,8 @@ public class SimpleChatClient {
             messageField.setText("");
             messageField.requestFocus();
 
-            closeConnection();
-            setUpNetworking();
+            getMessage();
+
         }else{
             System.out.println("Must not be emt!");
         }
