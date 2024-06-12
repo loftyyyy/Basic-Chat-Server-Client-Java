@@ -55,7 +55,7 @@ public class SimpleChatClient {
         try{
             channel = SocketChannel.open(new InetSocketAddress(5000));
             writer = new PrintWriter(Channels.newWriter(channel, StandardCharsets.UTF_8));
-            System.out.println("Sucuce");
+            System.out.println("Connection Started");
 
         }catch(Exception e){
             e.printStackTrace();
@@ -69,13 +69,14 @@ public class SimpleChatClient {
             messageField.setText("");
             messageField.requestFocus();
 
-            writer.close();
+            closeConnection();
+            setUpNetworking();
         }else{
             System.out.println("Must not be emt!");
         }
     }
     public void closeConnection(){
-        System.out.println("called close connection");
+        System.out.println("Connection Closed");
         try{
             if(writer != null){
                 writer.close();
