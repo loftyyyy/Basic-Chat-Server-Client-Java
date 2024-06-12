@@ -22,6 +22,7 @@ public class SimpleChatClient {
     }
 
     public void go(){
+        setUpNetworking();
         JFrame frame = new JFrame("Simple Chat Client");
         JPanel panel = new JPanel();
         JButton button = new JButton("Send");
@@ -40,7 +41,13 @@ public class SimpleChatClient {
         frame.setSize(400,400);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setUpNetworking();
+
+        frame.addWindowListener(new java.awt.event.WindowAdapter(){
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent){
+                closeConnection();
+            }
+        });
 
     }
     public void setUpNetworking(){
@@ -62,8 +69,23 @@ public class SimpleChatClient {
             messageField.setText("");
             messageField.requestFocus();
 
+            writer.close();
         }else{
             System.out.println("Must not be emt!");
+        }
+    }
+    public void closeConnection(){
+        System.out.println("called close connection");
+        try{
+            if(writer != null){
+                writer.close();
+            }
+            if(channel != null){
+                channel.close();
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 }
