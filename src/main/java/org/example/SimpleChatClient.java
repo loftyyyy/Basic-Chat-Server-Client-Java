@@ -17,6 +17,7 @@ public class SimpleChatClient {
     private JTextField messageField;
     private PrintWriter writer;
     private SocketChannel channel;
+    private Reader reader;
 
 
     public static void main(String[] args){
@@ -53,11 +54,13 @@ public class SimpleChatClient {
         });
 
     }
+
     public void setUpNetworking(){
 
         try{
             channel = SocketChannel.open(new InetSocketAddress(5000));
             writer = new PrintWriter(Channels.newWriter(channel, StandardCharsets.UTF_8));
+            reader = Channels.newReader(channel, StandardCharsets.UTF_8);
             System.out.println("Connection Started");
 
         }catch(Exception e){
@@ -66,7 +69,6 @@ public class SimpleChatClient {
 
     }
     public void getMessage(){
-        Reader reader = Channels.newReader(channel, StandardCharsets.UTF_8);
         BufferedReader bufferedReader = new BufferedReader(reader);
         String message;
         try{
@@ -90,8 +92,10 @@ public class SimpleChatClient {
 
         }else{
             System.out.println("Must not be emt!");
+            messageField.requestFocus();
         }
     }
+
     public void closeConnection(){
         System.out.println("Connection Closed");
         try{
@@ -105,5 +109,8 @@ public class SimpleChatClient {
         }catch (Exception e){
             e.printStackTrace();
         }
+
     }
+
 }
+
