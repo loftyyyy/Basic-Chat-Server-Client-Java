@@ -20,6 +20,7 @@ public class SimpleChatServer {
     public static void main(String[] args){
         new SimpleChatServer().startServer();
 
+
     }
 
     public void startServer(){
