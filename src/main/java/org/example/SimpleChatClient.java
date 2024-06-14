@@ -93,6 +93,8 @@ public class SimpleChatClient {
         }else{
             System.out.println("Must not be emt!");
             messageField.requestFocus();
+
+
         }
     }
 
