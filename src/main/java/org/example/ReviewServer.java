@@ -53,6 +53,9 @@ public class ReviewServer {
 
         }catch (Exception e){
             System.out.println("Server Closed");
+        }finally {
+
+            System.out.println("User Exited");
         }
 
     }
