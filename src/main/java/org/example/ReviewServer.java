@@ -17,7 +17,7 @@ public class ReviewServer {
 
 
     public static void main(String[] args){
-
+        new ReviewServer().start();
     }
     public void start(){
         try {
@@ -28,8 +28,7 @@ public class ReviewServer {
                 socketChannel = serverSocketChannel.accept();
                 printWriter = new PrintWriter(Channels.newWriter(socketChannel, StandardCharsets.UTF_8));
                 printWriters.add(printWriter);
-
-
+                readMessage();
 
 
             }
@@ -37,8 +36,18 @@ public class ReviewServer {
             throw new RuntimeException(e);
         }
     }
+    public void readMessage(){
 
-    public void sendMessage(){
+    }
+
+    public void sendMessage(String message){
+
+        for(PrintWriter writer : printWriters){
+            writer.println(message);
+            writer.flush();
+
+        }
+
 
     }
 
