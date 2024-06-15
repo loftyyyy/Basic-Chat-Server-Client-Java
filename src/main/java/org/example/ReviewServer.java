@@ -52,7 +52,7 @@ public class ReviewServer {
             }
 
         }catch (Exception e){
-            e.printStackTrace();
+            System.out.println("Server Closed");
         }
 
     }

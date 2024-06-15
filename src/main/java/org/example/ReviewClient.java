@@ -51,6 +51,11 @@ public class ReviewClient {
             message = input.nextLine();
             if(message.equals("n")){
                 continues = false;
+                try {
+                    socketChannel.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
             }else{
                 printWriter.println(message);
