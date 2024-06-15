@@ -1,7 +1,9 @@
 package org.example;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.channels.Channels;
@@ -9,6 +11,7 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.UnknownFormatConversionException;
 
 public class ReviewServer {
     private ArrayList<PrintWriter> printWriters = new ArrayList<>();
@@ -37,6 +40,20 @@ public class ReviewServer {
         }
     }
     public void readMessage(){
+        Reader reader = Channels.newReader(socketChannel, StandardCharsets.UTF_8);
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        String message;
+
+        try{
+            while((message = bufferedReader.readLine()) != null){
+                System.out.println("Server read: " + message);
+                sendMessage(message);
+
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
