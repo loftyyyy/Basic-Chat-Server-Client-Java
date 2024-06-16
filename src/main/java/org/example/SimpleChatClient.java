@@ -51,6 +51,8 @@ public class SimpleChatClient {
 
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.execute(new getMessage());
+        executorService.shutdown();
+        System.out.println("Done called");
 
         frame.getContentPane().add(BorderLayout.CENTER, panel);
         frame.pack();
@@ -98,7 +100,6 @@ public class SimpleChatClient {
         @Override
         public void run() {
             BufferedReader bufferedReader = new BufferedReader(reader);
-            System.out.println("get message called");
             try{
                 String message;
                 while((message = bufferedReader.readLine()) != null){
