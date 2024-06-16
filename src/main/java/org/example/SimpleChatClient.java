@@ -40,15 +40,18 @@ public class SimpleChatClient {
         messageField = new JTextField(32);
         JLabel label = new JLabel("Message");
 
+        JScrollPane chatArea = createScrollableTextArea();
 
         button.addActionListener(event -> sendMessage());
+        panel.add(chatArea);
         panel.add(label);
         panel.add(messageField);
         panel.add(button);
 
 
         ExecutorService executorService = Executors.newSingleThreadExecutor();
-        executorService.execute(getMessage::new);
+        executorService.execute(new getMessage());
+
         frame.getContentPane().add(BorderLayout.CENTER, panel);
         frame.pack();
         frame.setSize(400,400);
@@ -99,12 +102,16 @@ public class SimpleChatClient {
             try{
                 String message;
                 while((message = bufferedReader.readLine()) != null){
-                    System.out.println("Message from server: " + message);
+                    textArea.append(message + "\n");
                 }
 
-
-
             }catch (Exception e){
+                System.out.println("Client Closed");
+                try {
+                    bufferedReader.close();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
 
             }
 
@@ -115,6 +122,7 @@ public class SimpleChatClient {
     }
     public void sendMessage(){
         if(!messageField.getText().isBlank()){
+//            textArea.append(messageField.getText() + "\n");
             writer.println(messageField.getText());
             writer.flush();
             messageField.setText("");
