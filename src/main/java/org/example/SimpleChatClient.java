@@ -23,6 +23,7 @@ public class SimpleChatClient {
     private PrintWriter writer;
     private SocketChannel channel;
     private Reader reader;
+    private JTextArea textArea;
 
 
     public static void main(String[] args){
@@ -38,6 +39,7 @@ public class SimpleChatClient {
         JButton button = new JButton("Send");
         messageField = new JTextField(32);
         JLabel label = new JLabel("Message");
+
 
         button.addActionListener(event -> sendMessage());
         panel.add(label);
@@ -59,6 +61,20 @@ public class SimpleChatClient {
                 closeConnection();
             }
         });
+
+    }
+    private JScrollPane createScrollableTextArea(){
+        textArea = new JTextArea(15,30);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        textArea.setEditable(false);
+        JScrollPane scroller = new JScrollPane(textArea);
+        scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+
+        return scroller;
+
 
     }
 
