@@ -1,5 +1,8 @@
 package org.example;
 
+import org.w3c.dom.ls.LSOutput;
+
+import javax.sound.midi.Soundbank;
 import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
@@ -12,6 +15,8 @@ import java.nio.Buffer;
 import java.nio.channels.Channels;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SimpleChatClient {
     private JTextField messageField;
@@ -27,6 +32,7 @@ public class SimpleChatClient {
 
     public void go(){
         setUpNetworking();
+        System.out.println("go() class called");
         JFrame frame = new JFrame("Simple Chat Client");
         JPanel panel = new JPanel();
         JButton button = new JButton("Send");
@@ -39,7 +45,8 @@ public class SimpleChatClient {
         panel.add(button);
 
 
-
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(getMessage::new);
         frame.getContentPane().add(BorderLayout.CENTER, panel);
         frame.pack();
         frame.setSize(400,400);
@@ -68,16 +75,25 @@ public class SimpleChatClient {
         }
 
     }
-    public void getMessage(){
-        BufferedReader bufferedReader = new BufferedReader(reader);
-        String message;
-        try{
-            message = bufferedReader.readLine();
-            System.out.println(message);
+    public class getMessage implements Runnable {
+        @Override
+        public void run() {
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            System.out.println("get message called");
+            try{
+                String message;
+                while((message = bufferedReader.readLine()) != null){
+                    System.out.println("Message from server: " + message);
+                }
 
-        }catch (Exception e){
+
+
+            }catch (Exception e){
+
+            }
 
         }
+
 
 
     }
@@ -88,7 +104,6 @@ public class SimpleChatClient {
             messageField.setText("");
             messageField.requestFocus();
 
-            getMessage();
 
         }else{
             System.out.println("Must not be emt!");
