@@ -4,3 +4,10 @@ Problems than can be caused by using threads:
 
     DeadLock
         - This occurs when, two threads have the keys of each other that allows them to enter a method. This leads to a standstill.
+
+    Immutables
+        - If you want a variable that cannot be changed or modified, mark it as an immutable.
+        - Make an object immutable if you’re going to
+          share it between threads and you don’t want the
+          threads to change its data.
+        - You can change immutable data just by referencing or pointing it to a new data.
