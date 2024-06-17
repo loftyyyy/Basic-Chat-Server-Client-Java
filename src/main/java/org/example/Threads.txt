@@ -1,0 +1,6 @@
+Problems than can be caused by using threads:
+    Concurrency
+        - This occurs when two or more threads are trying to modify a shared data or object without the knowledge that the other thread are doing the same.
+
+    DeadLock
+        - This occurs when, two threads have the keys of each other that allows them to enter a method. This leads to a standstill.
