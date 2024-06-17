@@ -15,8 +15,15 @@ import java.nio.Buffer;
 import java.nio.channels.Channels;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static java.time.format.FormatStyle.MEDIUM;
 
 public class SimpleChatClient {
     private JTextField messageField;
@@ -96,14 +103,18 @@ public class SimpleChatClient {
         }
 
     }
+    public String getTime(){
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
     public class getMessage implements Runnable {
         @Override
         public void run() {
             BufferedReader bufferedReader = new BufferedReader(reader);
             try{
                 String message;
-                while((message = bufferedReader.readLine()) != null){
-                    textArea.append(message + "\n");
+                while ((message = bufferedReader.readLine()) != null) {
+                    String finalMessage = message;
+                    SwingUtilities.invokeLater(() -> textArea.append("[" + getTime() + "] " + finalMessage + "\n"));
                 }
 
             }catch (Exception e){
