@@ -9,7 +9,7 @@ public class BankAccount {
 
     public void spend(int amount){
         this.balance = balance - amount;
-        if(amount > balance){
+        if(balance < 0){
             System.out.println("Account overdrawn!");
 
         }
