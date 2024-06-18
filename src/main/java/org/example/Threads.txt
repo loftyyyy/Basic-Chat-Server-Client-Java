@@ -14,3 +14,4 @@ Problems than can be caused by using threads:
 
     ConcurrentModificationException
         - To combat this, we can use the data structures provided by the concurrent package. An example is the CopyOnWriteArrayList which when two threads simultaneously reads and writes a file, the CopyOnWriteArrayList creates a copy of the original list so that the two threads work separately and when the other thread is finished, the duplicate list becomes the original list.
+        - CopyOnWriteArrayList is best used for if you have lots of reading threads and not many writes. But if there’s a lot of writing going on, it might not be the best data structure. The cost of creating a new copy of the data every time a single write is made might be too high for some applications.
