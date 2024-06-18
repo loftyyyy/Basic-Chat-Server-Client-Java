@@ -11,3 +11,6 @@ Problems than can be caused by using threads:
           share it between threads and you don’t want the
           threads to change its data.
         - You can change immutable data just by referencing or pointing it to a new data.
+
+    ConcurrentModificationException
+        - To combat this, we can use the data structures provided by the concurrent package. An example is the CopyOnWriteArrayList which when two threads simultaneously reads and writes a file, the CopyOnWriteArrayList creates a copy of the original list so that the two threads work separately and when the other thread is finished, the duplicate list becomes the original list.
